@@ -18,6 +18,7 @@ LED RGB de indicação de funcionamento ou falha
     * LED pisca em verde quando pressiona o botão
     * LED pisca em vermelho quando há falha de leitura do sensor
 """
+import sys
 
 # Bibliotecas
 from machine import Pin, I2C
@@ -167,7 +168,7 @@ while True:
                 relogio_led = ticks_ms()
         sleep_ms(5000)
     except KeyboardInterrupt as k:
-        exit(0)
+        sys.exit()
     except BaseException as e:
         print(type(e))
         print(f'Unexpected {e}')
