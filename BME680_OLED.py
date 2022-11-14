@@ -20,9 +20,8 @@ LED RGB de indicação de funcionamento ou falha
 """
 import sys
 
-# Bibliotecas
 from machine import Pin, I2C
-from bme680 import *
+from bme680 import BME680_I2C
 from time import ticks_ms, sleep_ms
 import ssd1306
 
@@ -35,8 +34,6 @@ LED_OFF = 1
 # Configuração I2C da Pico
 # Usaremos I2C 0, GPIO 20 e 21 --> SDA e SCL
 i2c = I2C(0, scl=Pin(21), sda=Pin(20))
-
-# Inicializando e configurando a I2C dos dispositivos
 bme = BME680_I2C(i2c=i2c)
 display = ssd1306.SSD1306_I2C(128, 32, i2c)
 
@@ -90,11 +87,9 @@ def set_normal_state():
     led_G.value(LED_ON)
     led_R.value(LED_OFF)
 
-# Laço principal
 while True:
     set_normal_state()
 
-    # Leitura do botão com debounced
     if(button.value() == 0):
         sleep_ms(100)	# Debounced
         if(button.value() == 0):
@@ -172,6 +167,4 @@ while True:
     except BaseException as e:
         print(type(e))
         print(f'Unexpected {e}')
-
-
 
